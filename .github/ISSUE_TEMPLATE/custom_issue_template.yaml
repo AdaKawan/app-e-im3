@@ -1,64 +1,59 @@
-name: "Template Isu"
-description: "Template untuk membuat issue terkait penambahan fitur, perbaikan, error, atau revisi dari klien"
-title: "[Tipe Isu] Deskripsi singkat"
-labels: 
-  - "Tipe: {type}"
-  - "Prioritas: {priority}"
-assignees:
-  - "{developer}"
+name: Issue Template
+description: Template untuk membuat issue di proyek Next.js
+title: "[Issue]: "
+labels: []
+assignees: []
 
 body:
-  - type: dropdown
-    id: type
+  - type: markdown
     attributes:
-      label: "Tipe Isu"
-      description: "Pilih tipe isu ini"
-      options:
-        - "Penambahan Fitur"
-        - "Perbaikan"
-        - "Error"
-        - "Revisi dari Klien"
+      value: |
+        Terima kasih telah membuat issue! Silakan isi detail di bawah ini.
 
   - type: textarea
     id: description
     attributes:
-      label: "Deskripsi"
-      description: "Deskripsikan isu secara detail. Sertakan langkah-langkah yang diperlukan, screenshot, atau referensi lain jika ada."
-      placeholder: "Jelaskan isu di sini..."
+      label: Deskripsi
+      description: Jelaskan masalah atau fitur yang ingin ditambahkan.
+      placeholder: Deskripsi singkat tentang issue ini...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Jenis Issue
+      description: Pilih jenis issue ini.
+      options:
+        - Bug Report
+        - Feature Request
+        - Documentation Update
+    validations:
+      required: true
 
   - type: textarea
-    id: priority
+    id: steps_to_reproduce
     attributes:
-      label: "Prioritas"
-      description: "Tentukan tingkat prioritas dari isu ini (Misalnya: Tinggi, Sedang, Rendah)"
-      placeholder: "Tulis tingkat prioritas..."
+      label: Langkah untuk Mereproduksi (untuk Bug Report)
+      description: Langkah-langkah untuk mereproduksi bug ini.
+      placeholder: Langkah-langkah yang jelas dan terperinci...
+    validations:
+      required: false
 
   - type: textarea
-    id: steps
+    id: expected_behavior
     attributes:
-      label: "Langkah Reproduksi"
-      description: "Jika isu ini adalah bug atau error, jelaskan langkah-langkah untuk mereproduksi masalah ini"
-      placeholder: "Langkah-langkah untuk mereproduksi bug..."
+      label: Perilaku yang Diharapkan (untuk Bug Report)
+      description: Apa yang kamu harapkan terjadi?
+      placeholder: Perilaku yang diharapkan...
+    validations:
+      required: false
 
   - type: textarea
-    id: expected
+    id: additional_context
     attributes:
-      label: "Hasil yang Diharapkan"
-      description: "Apa yang seharusnya terjadi?"
-      placeholder: "Jelaskan hasil yang diharapkan..."
-      render: {{ type == "Error" }}
-
-  - type: textarea
-    id: actual
-    attributes:
-      label: "Hasil Aktual"
-      description: "Apa yang terjadi saat ini?"
-      placeholder: "Jelaskan hasil yang terjadi saat ini..."
-      render: {{ type == "Error" }}
-
-  - type: textarea
-    id: additional_notes
-    attributes:
-      label: "Catatan Tambahan"
-      description: "Tambahkan informasi tambahan atau catatan jika diperlukan."
-      placeholder: "Informasi tambahan..."
+      label: Konteks Tambahan
+      description: Informasi tambahan yang mungkin berguna.
+      placeholder: Konteks tambahan...
+    validations:
+      required: false
