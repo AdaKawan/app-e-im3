@@ -1,0 +1,64 @@
+name: "Template Isu"
+description: "Template untuk membuat issue terkait penambahan fitur, perbaikan, error, atau revisi dari klien"
+title: "[Tipe Isu] Deskripsi singkat"
+labels: 
+  - "Tipe: {type}"
+  - "Prioritas: {priority}"
+assignees:
+  - "{developer}"
+
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: "Tipe Isu"
+      description: "Pilih tipe isu ini"
+      options:
+        - "Penambahan Fitur"
+        - "Perbaikan"
+        - "Error"
+        - "Revisi dari Klien"
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Deskripsi"
+      description: "Deskripsikan isu secara detail. Sertakan langkah-langkah yang diperlukan, screenshot, atau referensi lain jika ada."
+      placeholder: "Jelaskan isu di sini..."
+
+  - type: textarea
+    id: priority
+    attributes:
+      label: "Prioritas"
+      description: "Tentukan tingkat prioritas dari isu ini (Misalnya: Tinggi, Sedang, Rendah)"
+      placeholder: "Tulis tingkat prioritas..."
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Langkah Reproduksi"
+      description: "Jika isu ini adalah bug atau error, jelaskan langkah-langkah untuk mereproduksi masalah ini"
+      placeholder: "Langkah-langkah untuk mereproduksi bug..."
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Hasil yang Diharapkan"
+      description: "Apa yang seharusnya terjadi?"
+      placeholder: "Jelaskan hasil yang diharapkan..."
+      render: {{ type == "Error" }}
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "Hasil Aktual"
+      description: "Apa yang terjadi saat ini?"
+      placeholder: "Jelaskan hasil yang terjadi saat ini..."
+      render: {{ type == "Error" }}
+
+  - type: textarea
+    id: additional_notes
+    attributes:
+      label: "Catatan Tambahan"
+      description: "Tambahkan informasi tambahan atau catatan jika diperlukan."
+      placeholder: "Informasi tambahan..."
