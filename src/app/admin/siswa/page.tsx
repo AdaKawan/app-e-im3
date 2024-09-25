@@ -2,7 +2,7 @@
 
 import { Spinner, Table } from "flowbite-react"
 import Link from "next/link";
-import { useUserControllerGetAllSiswaQuery } from "@/lib/redux/services/api/ApiEiM3Slice";
+import { useUserControllerGetAllSiswaQuery } from "@/lib/redux/services/api/endpoints/ApiEiM3";
 
 export default function ListSiswaAdminPage () {
     const { data, error, isLoading } = useUserControllerGetAllSiswaQuery();

@@ -1,6 +1,6 @@
 "use client"
 
-import DashboardLayout from "@/components/DashboardLayout";
+import DashboardLayoutAdmin from "@/components/DashboardLayoutAdmin";
 import withAuth from "@/lib/HOC/withAuth";
 import { usePelajaranControllerFindAllQuery, useUserControllerGetAllGuruQuery, useUserControllerGetAllSiswaQuery } from "@/lib/redux/services/api/endpoints/ApiEiM3";
 import { RootState, useAppSelector } from "@/lib/redux/store";
@@ -31,7 +31,7 @@ export default function AdminPage () {
         : getAllGuru && getAllSiswa && getAllPelajaran ?
         <>
         <h1>Selamat Datang {user.nama_lengkap}</h1>
-        <DashboardLayout data={{
+        <DashboardLayoutAdmin data={{
             jumlahGuru: getAllGuru.guru.length,
             jumlahSiswa: getAllSiswa.siswa.length,
             jumlahPelajaran: getAllPelajaran.pelajaran.length,

@@ -4,6 +4,11 @@ import { GetAllSiswa } from "@/types/GetAllSiswa";
 import { GetAllPelajaran } from "@/types/GetAllPelajaran";
 import { GetMeResponse } from "@/types/GetMeResponse";
 import { RegisterResponse } from "@/types/RegisterResponse";
+import { getCookie } from "cookies-next";
+import { GlobalResponse } from "@/types/GlobalResponse";
+
+
+
 export const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     userControllerGetAllGuru: build.query<
@@ -99,19 +104,32 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/pelajaran/create`,
         method: "POST",
         body: queryArg.createPelajaranDto,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
       }),
     }),
     pelajaranControllerFindAll: build.query<
       PelajaranControllerFindAllApiResponse,
       PelajaranControllerFindAllApiArg
     >({
-      query: () => ({ url: `/pelajaran/get-all` }),
+      query: () => ({
+        url: `/pelajaran/get-all`,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
+      }),
     }),
     pelajaranControllerFindOne: build.query<
       PelajaranControllerFindOneApiResponse,
       PelajaranControllerFindOneApiArg
     >({
-      query: (queryArg) => ({ url: `/pelajaran/get-by-id/${queryArg.id}` }),
+      query: (queryArg) => ({
+        url: `/pelajaran/get-by-id/${queryArg.id}`,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
+      }),
     }),
     pelajaranControllerFindBySekolahAndJenjang: build.query<
       PelajaranControllerFindBySekolahAndJenjangApiResponse,
@@ -139,6 +157,9 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/pelajaran/delete/${queryArg.id}`,
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        }
       }),
     }),
     materiControllerCreate: build.mutation<
@@ -370,7 +391,12 @@ export const injectedRtkApi = api.injectEndpoints({
       AuthControllerLogoutApiResponse,
       AuthControllerLogoutApiArg
     >({
-      query: () => ({ url: `/auth/logout`, method: "POST" }),
+      query: () => ({
+        url: `/auth/logout`, method: "POST",
+        headers: {
+          'Authorization': `Bearer ${getCookie('refreshToken')}`,
+        }
+      }),
     }),
     authControllerAutoLogin: build.mutation<
       AuthControllerAutoLoginApiResponse,
@@ -429,7 +455,7 @@ export type UserControllerUpdateProfileUSerApiArg = {
   /** Update User */
   updateUserDto: UpdateUserDto;
 };
-export type PelajaranControllerCreateApiResponse = unknown;
+export type PelajaranControllerCreateApiResponse = GlobalResponse;
 export type PelajaranControllerCreateApiArg = {
   createPelajaranDto: CreatePelajaranDto;
 };
