@@ -5,7 +5,7 @@ import { Card, Label, TextInput, Button, Select, Checkbox } from 'flowbite-react
 import { getCookie } from 'cookies-next';
 import ToastNotification from '@/components/ToastNotification';
 import { useAppDispatch } from '@/lib/redux/store';
-import { useUserControllerCreateMutation } from '@/lib/redux/services/api/ApiEiM3Slice';
+import { useUserControllerCreateMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
 
 const CreateUserForm: React.FC = () => {
   const [namaLengkap, setNamaLengkap] = useState('');
@@ -33,6 +33,7 @@ const CreateUserForm: React.FC = () => {
           password,
           confPassword,
           roleId,
+          isActive: true
         },
       }).unwrap();
       setToastMessage('User created successfully');

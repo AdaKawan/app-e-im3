@@ -15,7 +15,8 @@ export interface GetAllPelajaran {
 
 export interface Pelajaran {
     id:             number;
-    kelasId:        number;
+    jenjang_kelas:  number;
+    asal_sekolah:   string;
     creatorId:      number;
     nama_pelajaran: string;
     createdAt:      Date;
@@ -28,12 +29,16 @@ export interface Materi {
     pelajaranId: number;
     creatorId:   number;
     nama_materi: string;
-    file:        null;
-    file_url:    null;
-    yt_link:     null;
-    file_link:   null;
+    isi_materi:  string;
+    files:       File[];
     createdAt:   Date;
     updatedAt:   Date;
+}
+
+export interface File {
+    fileUrl:      string;
+    fileName:     string;
+    originalName: string;
 }
 
 // Converts JSON strings to/from your types
@@ -208,7 +213,8 @@ const typeMap: any = {
     ], false),
     "Pelajaran": o([
         { json: "id", js: "id", typ: 0 },
-        { json: "kelasId", js: "kelasId", typ: 0 },
+        { json: "jenjang_kelas", js: "jenjang_kelas", typ: 0 },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: "" },
         { json: "creatorId", js: "creatorId", typ: 0 },
         { json: "nama_pelajaran", js: "nama_pelajaran", typ: "" },
         { json: "createdAt", js: "createdAt", typ: Date },
@@ -220,11 +226,14 @@ const typeMap: any = {
         { json: "pelajaranId", js: "pelajaranId", typ: 0 },
         { json: "creatorId", js: "creatorId", typ: 0 },
         { json: "nama_materi", js: "nama_materi", typ: "" },
-        { json: "file", js: "file", typ: null },
-        { json: "file_url", js: "file_url", typ: null },
-        { json: "yt_link", js: "yt_link", typ: null },
-        { json: "file_link", js: "file_link", typ: null },
+        { json: "isi_materi", js: "isi_materi", typ: "" },
+        { json: "files", js: "files", typ: a(r("File")) },
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },
+    ], false),
+    "File": o([
+        { json: "fileUrl", js: "fileUrl", typ: "" },
+        { json: "fileName", js: "fileName", typ: "" },
+        { json: "originalName", js: "originalName", typ: "" },
     ], false),
 };

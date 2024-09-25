@@ -1,10 +1,10 @@
-export default function RootAdminKelasByIdPage({
+export default function PelajaranLayout({
     children,
   }: Readonly<{
     children: React.ReactNode;
   }>) {
     return (
-        <div className="p-6">
+        <div>
             {children}
         </div>
     );

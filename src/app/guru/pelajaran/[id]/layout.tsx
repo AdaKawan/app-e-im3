@@ -1,4 +1,4 @@
-export default function RootAdminKelasPage({
+export default function PelajaranLayoutById({
     children,
   }: Readonly<{
     children: React.ReactNode;

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Label, TextInput, Select, Button, Checkbox } from 'flowbite-react';
 import ToastNotification from '@/components/ToastNotification';
-import { useUserControllerFinOneGuruQuery, useUserControllerUpdateMutation } from '@/lib/redux/services/api/ApiEiM3Slice'; // Pastikan Anda telah mengimpor hook yang benar
+import { useUserControllerFinOneGuruQuery, useUserControllerUpdateMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3'; // Pastikan Anda telah mengimpor hook yang benar
 import { useRouter } from 'next/navigation';
 
 export default function EditGuruForm({ params }: { params: { id: string } }) {
@@ -24,28 +24,28 @@ export default function EditGuruForm({ params }: { params: { id: string } }) {
   });
   const router = useRouter()
 
-  useEffect(() => {
-    if (data) {
-      setNamaLengkap(data.guru.nama_lengkap);
-      setEmail(data.guru.email);
-      setUsername(data.guru.username);
-      setRoleId(data.guru.role.id);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setNamaLengkap(data.guru.nama_lengkap);
+  //     setEmail(data.guru.email);
+  //     setUsername(data.guru.username);
+  //     setRoleId(data.guru.role.id);
+  //   }
+  // }, [data]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await updateUser({
-        id: Number(params.id),
-        updateUserDto: {
-          nama_lengkap: namaLengkap,
-          email,
-          username,
-          password,
-          confPassword,
-        },
-      }).unwrap();
+      // await updateUser({
+      //   id: Number(params.id),
+      //   updateUserDto: {
+      //     nama_lengkap: namaLengkap,
+      //     email,
+      //     username,
+      //     password,
+      //     confPassword,
+      //   },
+      // }).unwrap();
       setToastMessage('User updated successfully');
       setToastType('success');
       setShowToast(true);

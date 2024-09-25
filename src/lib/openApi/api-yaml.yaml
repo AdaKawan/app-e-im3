@@ -99,6 +99,27 @@ paths:
           description: ''
       tags:
         - User
+  /users/toggle-active/{id}:
+    patch:
+      operationId: UserController_toggleActiveStatus
+      summary: Update is Active User
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIsActiveDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
   /users/delete/{id}:
     delete:
       operationId: UserController_delete
@@ -114,195 +135,33 @@ paths:
           description: ''
       tags:
         - User
-  /kelas/create:
-    post:
-      operationId: KelasController_create
-      summary: Create Kelas
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateKelaDto'
-      responses:
-        '201':
-          description: Berhasil menambah data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateKelasResponseDto'
-      tags:
-        - Kelas
-  /kelas/get-all:
+  /users/get-me:
     get:
-      operationId: KelasController_findAll
-      summary: Get All Kelas
+      operationId: UserController_userGetMe
+      summary: User Get Me
       parameters: []
       responses:
         '200':
-          description: Berhasil mengambil data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FindAllKelasResponseDto'
+          description: ''
       tags:
-        - Kelas
-  /kelas/get-by-id/{id}:
-    get:
-      operationId: KelasController_findOne
-      summary: Get Kelas By Id
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: Berhasil menemukan kelas
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FindOneKelasResponseDto'
-      tags:
-        - Kelas
-  /kelas/update/{id}:
+        - User
+  /users/update-profile:
     patch:
-      operationId: KelasController_update
-      summary: Update Kelas
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: number
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateKelaDto'
-      responses:
-        '200':
-          description: Berhasil memperbarui kelas
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UpdateKelasResponseDto'
-      tags:
-        - Kelas
-  /kelas/delete/{id}:
-    delete:
-      operationId: KelasController_remove
-      summary: Delete Kelas
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: Berhasil menghapus kelas
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteKelasResponseDto'
-      tags:
-        - Kelas
-  /user-on-kelas/create:
-    post:
-      operationId: UserOnKelasController_create
-      summary: Create
+      operationId: UserController_updateProfileUSer
+      summary: Update User
       parameters: []
       requestBody:
         required: true
+        description: Update User
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUserOnKelaDto'
-      responses:
-        '201':
-          description: ''
-      tags:
-        - User On Kelas
-  /user-on-kelas/get-all:
-    get:
-      operationId: UserOnKelasController_findAll
-      summary: Get All
-      parameters: []
+              $ref: '#/components/schemas/UpdateUserDto'
       responses:
         '200':
           description: ''
       tags:
-        - User On Kelas
-  /user-on-kelas/find-by-user-id/{userId}:
-    get:
-      operationId: UserOnKelasController_findOneByUserId
-      summary: Find By User Id
-      parameters:
-        - name: userId
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: ''
-      tags:
-        - User On Kelas
-  /user-on-kelas/find-by-kelas-id/{kelasId}:
-    get:
-      operationId: UserOnKelasController_findOneByKelasId
-      summary: Find By Kelas Id
-      parameters:
-        - name: kelasId
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: ''
-      tags:
-        - User On Kelas
-  /user-on-kelas/update:
-    patch:
-      operationId: UserOnKelasController_update
-      summary: Update
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateUserOnKelasDto'
-      responses:
-        '200':
-          description: ''
-      tags:
-        - User On Kelas
-  /user-on-kelas/delete{userId}/{kelasId}:
-    delete:
-      operationId: UserOnKelasController_remove
-      summary: Delete
-      parameters:
-        - name: userId
-          required: true
-          in: path
-          schema:
-            type: number
-        - name: kelasId
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: ''
-      tags:
-        - User On Kelas
+        - User
   /pelajaran/create:
     post:
       operationId: PelajaranController_create
@@ -337,6 +196,26 @@ paths:
         - name: id
           required: true
           in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pelajaran
+  /pelajaran/get-by-sekolah-jenjang:
+    get:
+      operationId: PelajaranController_findBySekolahAndJenjang
+      summary: Get All Pelajaran sekolah? jenjang?
+      parameters:
+        - name: sekolah
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: jenjang
+          required: true
+          in: query
           schema:
             type: number
       responses:
@@ -393,11 +272,7 @@ paths:
               $ref: '#/components/schemas/CreateMateriDto'
       responses:
         '201':
-          description: Berhasil menambah materi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateMateriResponseDto'
+          description: ''
       tags:
         - Materi
   /materi/get-all:
@@ -407,11 +282,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: Berhasil mengambil semua materi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FindAllMateriResponseDto'
+          description: ''
       tags:
         - Materi
   /materi/get-by-id/{id}:
@@ -426,11 +297,7 @@ paths:
             type: number
       responses:
         '200':
-          description: Berhasil menemukan materi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FindOneMateriResponseDto'
+          description: ''
       tags:
         - Materi
   /materi/update/{id}:
@@ -451,11 +318,7 @@ paths:
               $ref: '#/components/schemas/UpdateMateriDto'
       responses:
         '200':
-          description: Berhasil memperbarui materi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UpdateMateriResponseDto'
+          description: ''
       tags:
         - Materi
   /materi/delete/{id}:
@@ -470,11 +333,7 @@ paths:
             type: number
       responses:
         '200':
-          description: Berhasil menghapus materi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteMateriResponseDto'
+          description: ''
       tags:
         - Materi
   /tugas/create:
@@ -493,6 +352,8 @@ paths:
           description: ''
       tags:
         - Tugas
+      security:
+        - bearer: []
   /tugas/get-all:
     get:
       operationId: TugasController_findAll
@@ -500,13 +361,11 @@ paths:
       parameters: []
       responses:
         '200':
-          description: Berhasil mengambil semua tugas
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FindAllTugasResponseDto'
+          description: ''
       tags:
         - Tugas
+      security:
+        - bearer: []
   /tugas/get-by-id/{id}:
     get:
       operationId: TugasController_findOne
@@ -522,6 +381,8 @@ paths:
           description: ''
       tags:
         - Tugas
+      security:
+        - bearer: []
   /tugas/update/{id}:
     patch:
       operationId: TugasController_update
@@ -543,6 +404,8 @@ paths:
           description: ''
       tags:
         - Tugas
+      security:
+        - bearer: []
   /tugas/delete/{id}:
     delete:
       operationId: TugasController_remove
@@ -558,6 +421,8 @@ paths:
           description: ''
       tags:
         - Tugas
+      security:
+        - bearer: []
   /pengumpulan/create:
     post:
       operationId: PengumpulanController_create
@@ -648,11 +513,7 @@ paths:
               $ref: '#/components/schemas/CreateNilaiDto'
       responses:
         '201':
-          description: Berhasil menambah nilai
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateNilaiResponseDto'
+          description: ''
       tags:
         - Nilai
   /nilai/get-all:
@@ -662,11 +523,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: Berhasil mengambil semua nilai
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FindAllNilaiResponseDto'
+          description: ''
       tags:
         - Nilai
   /nilai/get-by-id/{id}:
@@ -681,11 +538,7 @@ paths:
             type: number
       responses:
         '200':
-          description: Berhasil menemukan nilai
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FindOneNilaiResponseDto'
+          description: ''
       tags:
         - Nilai
   /nilai/update/{id}:
@@ -706,11 +559,7 @@ paths:
               $ref: '#/components/schemas/UpdateNilaiDto'
       responses:
         '200':
-          description: Berhasil memperbarui nilai
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UpdateNilaiResponseDto'
+          description: ''
       tags:
         - Nilai
   /nilai/delete/{id}:
@@ -725,11 +574,7 @@ paths:
             type: number
       responses:
         '200':
-          description: Berhasil menghapus nilai
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteNilaiResponseDto'
+          description: ''
       tags:
         - Nilai
   /user-on-materi/create:
@@ -748,6 +593,8 @@ paths:
           description: ''
       tags:
         - User On Materi
+      security:
+        - bearer: []
   /user-on-materi/get-all:
     get:
       operationId: UserOnMateriController_findAll
@@ -758,6 +605,8 @@ paths:
           description: ''
       tags:
         - User On Materi
+      security:
+        - bearer: []
   /user-on-materi/get-by-materi-id/{materiId}:
     get:
       operationId: UserOnMateriController_findOneByMateriId
@@ -773,6 +622,8 @@ paths:
           description: ''
       tags:
         - User On Materi
+      security:
+        - bearer: []
   /user-on-materi/get-by-user-id/{userId}:
     get:
       operationId: UserOnMateriController_findOneByUserId
@@ -788,6 +639,8 @@ paths:
           description: ''
       tags:
         - User On Materi
+      security:
+        - bearer: []
   /user-on-materi/delete/{userId}/{materiId}:
     delete:
       operationId: UserOnMateriController_remove
@@ -808,6 +661,24 @@ paths:
           description: ''
       tags:
         - User On Materi
+      security:
+        - bearer: []
+  /auth/register:
+    post:
+      operationId: AuthController_register
+      summary: Register
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Authentication
   /auth/login:
     post:
       operationId: AuthController_login
@@ -819,6 +690,28 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/LoginDto'
+            examples:
+              loginAdmin:
+                summary: Admin Login
+                description: Digunakan untuk login sebagai admin
+                value:
+                  username: admin
+                  password: admin12345678
+                  rememberMe: true
+              guruSmpNegeri2Barat:
+                summary: Guru SMP Negeri 2 Barat Login
+                description: Digunakan untuk login sebagai Guru SMP Negeri 2 Barat
+                value:
+                  username: gurusmpnegeri2barat
+                  password: gurusmpnegeri2barat
+                  rememberMe: true
+              guruSmpNegeri1Lembeyan:
+                summary: Guru SMP Negeri 1 Lembeyan Login
+                description: Digunakan untuk login sebagai Guru SMP Negeri 1 Lembeyan
+                value:
+                  username: guruSmpNegeri1Lembeyan
+                  password: gurusmpnegeri1lembeyan
+                  rememberMe: true
       responses:
         '201':
           description: ''
@@ -855,263 +748,110 @@ paths:
       tags:
         - Authentication
 info:
-  title: API Sekolah Muhammadiyah
-  description: The cats API description
-  version: '1.0'
+  title: API E-iM3
+  description: API Development Aplikasi E-iM3
+  version: 0.1.9-demo
   contact: {}
 tags: []
 servers:
-  - url: https://api-e-im3.vercel.app
-    description: Production Servel
-  - url: http://localhost:5090
-    description: Dev Server Port 5090
-  - url: http://localhost:3000
-    description: Dev Server Port 3000
+  - url: https://rehan.niznet.my.id
+    description: Production Server
+  - url: http://localhost:6948
+    description: Dev Server Port 6948
 components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
   schemas:
     CreateUserDto:
       type: object
       properties:
         nama_lengkap:
           type: string
-          minLength: 4
         email:
           type: string
         username:
           type: string
-          minLength: 3
         password:
           type: string
-          minLength: 8
         confPassword:
           type: string
-          minLength: 8
         roleId:
           type: number
+        asal_sekolah:
+          type: string
+        isActive:
+          type: boolean
       required:
         - nama_lengkap
         - username
         - password
         - confPassword
         - roleId
+        - isActive
     UpdateUserDto:
       type: object
       properties:
         nama_lengkap:
           type: string
-          minLength: 4
         email:
           type: string
         username:
           type: string
-          minLength: 3
         password:
           type: string
-          minLength: 8
         confPassword:
           type: string
-          minLength: 8
+        asal_sekolah:
+          type: string
+        isActive:
+          type: boolean
       required:
         - nama_lengkap
         - username
         - password
         - confPassword
-    CreateKelaDto:
+        - isActive
+    UpdateIsActiveDto:
       type: object
       properties:
-        nama_kelas:
-          type: string
-          minLength: 3
+        isActive:
+          type: boolean
       required:
-        - nama_kelas
-    CreateKelasResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil menambah data
-        kelas:
-          type: object
-          description: Kelas yang baru dibuat
-          example:
-            id: 1231231
-            nama_kelas: Matematika
-      required:
-        - status
-        - message
-        - kelas
-    KelasDto:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 12312
-        nama_kelas:
-          type: string
-          example: Matematika
-      required:
-        - id
-        - nama_kelas
-    FindAllKelasResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil mengambil data
-        kelas:
-          description: List of Kelas
-          type: array
-          items:
-            $ref: '#/components/schemas/KelasDto'
-      required:
-        - status
-        - message
-        - kelas
-    UserDto:
-      type: object
-      properties:
-        nama_lengkap:
-          type: string
-          example: John Doe
-      required:
-        - nama_lengkap
-    PelajaranDto:
-      type: object
-      properties:
-        nama_pelajaran:
-          type: string
-          example: Matematika
-      required:
-        - nama_pelajaran
-    KelasDetailDto:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1231231
-        nama_kelas:
-          type: string
-          example: Matematika
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserDto'
-        pelajaran:
-          type: array
-          items:
-            $ref: '#/components/schemas/PelajaranDto'
-      required:
-        - id
-        - nama_kelas
-        - users
-        - pelajaran
-    FindOneKelasResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil menemukan kelas
-        kelas:
-          description: Detail kelas yang ditemukan
-          allOf:
-            - $ref: '#/components/schemas/KelasDetailDto'
-      required:
-        - status
-        - message
-        - kelas
-    UpdateKelaDto:
-      type: object
-      properties:
-        nama_kelas:
-          type: string
-          minLength: 3
-      required:
-        - nama_kelas
-    UpdateKelasResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil memperbarui kelas
-        kelas:
-          type: object
-          description: Kelas yang diperbarui
-          example:
-            id: 12312
-            nama_kelas: Fisika
-      required:
-        - status
-        - message
-        - kelas
-    DeleteKelasResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil menghapus kelas
-      required:
-        - status
-        - message
-    CreateUserOnKelaDto:
-      type: object
-      properties:
-        userId:
-          type: number
-        kelasId:
-          type: number
-      required:
-        - userId
-        - kelasId
-    UpdateUserOnKelasDto:
-      type: object
-      properties:
-        oldUserId:
-          type: number
-        oldKelasId:
-          type: number
-        newUserId:
-          type: number
-        newKelasId:
-          type: number
-      required:
-        - oldUserId
-        - oldKelasId
+        - isActive
     CreatePelajaranDto:
       type: object
       properties:
-        kelasId:
+        jenjang_kelas:
           type: number
+          example: 1
+        asal_sekolah:
+          type: string
           example: 1
         nama_pelajaran:
           type: string
           example: Pelajaran A
       required:
-        - kelasId
+        - jenjang_kelas
+        - asal_sekolah
         - nama_pelajaran
     UpdatePelajaranDto:
       type: object
       properties:
-        kelasId:
+        jenjang_kelas:
           type: number
+          example: 1
+        asal_sekolah:
+          type: string
+          example: 1
         nama_pelajaran:
           type: string
+          example: Pelajaran A
       required:
-        - kelasId
+        - jenjang_kelas
+        - asal_sekolah
         - nama_pelajaran
     CreateMateriDto:
       type: object
@@ -1124,217 +864,14 @@ components:
           type: string
           description: Nama materi
           example: Materi Matematika
-        file:
+        isi_materi:
           type: string
-          description: File materi
-          example: file.pdf
-        file_url:
-          type: string
-          description: File URL materi
-          example: https://example.com/public/file.pdf
-        yt_link:
-          type: string
-          description: Link video YouTube terkait materi
-          example: https://youtube.com/example
-        file_link:
-          type: string
-          description: Link file tambahan terkait materi
-          example: https://example.com/file
+          description: Isi materi
+          example: Konten materi
       required:
         - pelajaranId
         - nama_materi
-    CreateMateriResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil menambah materi
-        materi:
-          type: object
-          description: Materi yang baru dibuat
-          example:
-            id: 1
-            pelajaranId: 2
-            creatorId: 3
-            nama_materi: Materi Matematika
-            file: unique-file-name.pdf
-            file_url: https://example.com/path/to/file.pdf
-            yt_link: https://youtube.com/link
-            file_link: https://example.com/file
-            createdAt: '2024-08-25T00:00:00.000Z'
-            updatedAt: '2024-08-25T00:00:00.000Z'
-      required:
-        - status
-        - message
-        - materi
-    TugasDto:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-        materiId:
-          type: number
-          example: 1
-        creatorId:
-          type: number
-          example: 2
-        nama_tugas:
-          type: string
-          example: Tugas 1 - Materi A Pelajaran A Kelas 1A
-        file:
-          type: string
-          nullable: true
-          example: null
-        file_url:
-          type: string
-          nullable: true
-          example: null
-        deadline:
-          format: date-time
-          type: string
-          example: '2024-08-30T23:59:59.999Z'
-        createdAt:
-          format: date-time
-          type: string
-          example: '2024-08-23T10:07:33.398Z'
-        updatedAt:
-          format: date-time
-          type: string
-          example: '2024-08-23T10:07:33.398Z'
-      required:
-        - id
-        - materiId
-        - creatorId
-        - nama_tugas
-        - file
-        - file_url
-        - deadline
-        - createdAt
-        - updatedAt
-    MateriDto:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-        pelajaranId:
-          type: number
-          example: 1
-        creatorId:
-          type: number
-          example: 2
-        nama_materi:
-          type: string
-          example: Materi A Pelajaran A Kelas 1A
-        file:
-          type: string
-          nullable: true
-          example: null
-        file_url:
-          type: string
-          nullable: true
-          example: null
-        yt_link:
-          type: string
-          nullable: true
-          example: null
-        file_link:
-          type: string
-          nullable: true
-          example: null
-        createdAt:
-          format: date-time
-          type: string
-          example: '2024-08-23T10:07:30.922Z'
-        updatedAt:
-          format: date-time
-          type: string
-          example: '2024-08-23T10:07:30.922Z'
-        tugas:
-          description: List of Tugas associated with the Materi
-          example:
-            - id: 1
-              materiId: 1
-              creatorId: 2
-              nama_tugas: Tugas 1 - Materi A Pelajaran A Kelas 1A
-              file: null
-              file_url: null
-              deadline: '2024-08-30T23:59:59.999Z'
-              createdAt: '2024-08-23T10:07:33.398Z'
-              updatedAt: '2024-08-23T10:07:33.398Z'
-          type: array
-          items:
-            $ref: '#/components/schemas/TugasDto'
-      required:
-        - id
-        - pelajaranId
-        - creatorId
-        - nama_materi
-        - file
-        - file_url
-        - yt_link
-        - file_link
-        - createdAt
-        - updatedAt
-        - tugas
-    FindAllMateriResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil mengambil semua materi
-        materi:
-          description: List of Materi
-          example:
-            - id: 1
-              pelajaranId: 1
-              creatorId: 2
-              nama_materi: Materi A Pelajaran A Kelas 1A
-              file: null
-              file_url: null
-              yt_link: null
-              file_link: null
-              createdAt: '2024-08-23T10:07:30.922Z'
-              updatedAt: '2024-08-23T10:07:30.922Z'
-              tugas:
-                - id: 1
-                  materiId: 1
-                  creatorId: 2
-                  nama_tugas: Tugas 1 - Materi A Pelajaran A Kelas 1A
-                  file: null
-                  file_url: null
-                  deadline: '2024-08-30T23:59:59.999Z'
-                  createdAt: '2024-08-23T10:07:33.398Z'
-                  updatedAt: '2024-08-23T10:07:33.398Z'
-          type: array
-          items:
-            $ref: '#/components/schemas/MateriDto'
-      required:
-        - status
-        - message
-        - materi
-    FindOneMateriResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil menemukan materi
-        materi:
-          $ref: '#/components/schemas/MateriDto'
-      required:
-        - status
-        - message
-        - materi
+        - isi_materi
     UpdateMateriDto:
       type: object
       properties:
@@ -1346,99 +883,14 @@ components:
           type: string
           description: Nama materi
           example: Materi Matematika
-        file:
+        isi_materi:
           type: string
-          description: File materi
-          example: file.pdf
-        file_url:
-          type: string
-          description: File URL materi
-          example: https://example.com/public/file.pdf
-        yt_link:
-          type: string
-          description: Link video YouTube terkait materi
-          example: https://youtube.com/example
-        file_link:
-          type: string
-          description: Link file tambahan terkait materi
-          example: https://example.com/file
-    MateriWithoutTugasDto:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-        pelajaranId:
-          type: number
-          example: 1
-        creatorId:
-          type: number
-          example: 2
-        nama_materi:
-          type: string
-          example: Materi A Pelajaran A Kelas 1A
-        file:
-          type: string
-          nullable: true
-          example: null
-        file_url:
-          type: string
-          nullable: true
-          example: null
-        yt_link:
-          type: string
-          nullable: true
-          example: null
-        file_link:
-          type: string
-          nullable: true
-          example: null
-        createdAt:
-          type: string
-          example: '2024-08-23T10:07:30.922Z'
-        updatedAt:
-          type: string
-          example: '2024-08-23T10:07:30.922Z'
+          description: Isi materi
+          example: Konten materi
       required:
-        - id
         - pelajaranId
-        - creatorId
         - nama_materi
-        - file
-        - file_url
-        - yt_link
-        - file_link
-        - createdAt
-        - updatedAt
-    UpdateMateriResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil memperbarui materi
-        materi:
-          description: Materi yang diperbarui tanpa tugas
-          allOf:
-            - $ref: '#/components/schemas/MateriWithoutTugasDto'
-      required:
-        - status
-        - message
-        - materi
-    DeleteMateriResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil menghapus materi
-      required:
-        - status
-        - message
+        - isi_materi
     CreateTugasDto:
       type: object
       properties:
@@ -1450,14 +902,31 @@ components:
           type: string
           description: Nama tugas
           example: Tugas Matematika
-        file:
-          type: string
-          description: file tugas
-          example: Selesaikan soal berikut...
-        file_url:
-          type: string
-          description: File URL tugas
-          example: Selesaikan soal berikut...
+        isi_tugas:
+          description: Isi tugas dalam format JSON
+          example:
+            - id: 5
+              title: Apa simbol kimia untuk air?
+              answer: H2O
+              points: 5
+              content: Apa simbol kimia untuk air?
+            - id: 6
+              type: multiple-choice
+              title: Apa ibu kota dari Australia?
+              points: 10
+              content: Apa ibu kota dari Australia?
+              options:
+                - text: Sydney
+                  isCorrect: false
+                - text: Melbourne
+                  isCorrect: false
+                - text: Canberra
+                  isCorrect: true
+                - text: Brisbane
+                  isCorrect: false
+          type: array
+          items:
+            type: string
         deadline:
           format: date-time
           type: string
@@ -1466,61 +935,8 @@ components:
       required:
         - materiId
         - nama_tugas
+        - isi_tugas
         - deadline
-    Tugas:
-      type: object
-      properties:
-        id:
-          format: int64
-          type: integer
-        materiId:
-          format: int64
-          type: integer
-        creatorId:
-          format: int64
-          type: integer
-        nama_tugas:
-          type: string
-        file:
-          type: string
-          nullable: true
-        file_url:
-          type: string
-          nullable: true
-        deadline:
-          format: date-time
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-      required:
-        - id
-        - materiId
-        - creatorId
-        - nama_tugas
-        - deadline
-        - createdAt
-        - updatedAt
-    FindAllTugasResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil mengambil semua tugas
-        tugas:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tugas'
-      required:
-        - status
-        - message
-        - tugas
     UpdateTugasDto:
       type: object
       properties:
@@ -1532,14 +948,31 @@ components:
           type: string
           description: Nama tugas
           example: Tugas Matematika
-        file:
-          type: string
-          description: file tugas
-          example: Selesaikan soal berikut...
-        file_url:
-          type: string
-          description: File URL tugas
-          example: Selesaikan soal berikut...
+        isi_tugas:
+          description: Isi tugas dalam format JSON
+          example:
+            - id: 5
+              title: Apa simbol kimia untuk air?
+              answer: H2O
+              points: 5
+              content: Apa simbol kimia untuk air?
+            - id: 6
+              type: multiple-choice
+              title: Apa ibu kota dari Australia?
+              points: 10
+              content: Apa ibu kota dari Australia?
+              options:
+                - text: Sydney
+                  isCorrect: false
+                - text: Melbourne
+                  isCorrect: false
+                - text: Canberra
+                  isCorrect: true
+                - text: Brisbane
+                  isCorrect: false
+          type: array
+          items:
+            type: string
         deadline:
           format: date-time
           type: string
@@ -1548,6 +981,7 @@ components:
       required:
         - materiId
         - nama_tugas
+        - isi_tugas
         - deadline
     CreatePengumpulanDto:
       type: object
@@ -1556,16 +990,19 @@ components:
           type: number
           description: ID tugas yang terkait dengan pengumpulan
           example: 1
-        file:
-          type: string
-          description: File tugas yang dikumpulkan
-          example: file.pdf
-        file_url:
-          type: string
-          description: File URL tugas yang dikumpulkan
-          example: https://example.com/file.pdf
+        isi_pengumpulan:
+          description: Isi pengumpulan dalam format JSON
+          example:
+            - id: 5
+              answer: H2O
+            - id: 6
+              answer: Canberra
+          type: array
+          items:
+            type: string
       required:
         - tugasId
+        - isi_pengumpulan
     UpdatePengumpulanDto:
       type: object
       properties:
@@ -1573,16 +1010,19 @@ components:
           type: number
           description: ID tugas yang terkait dengan pengumpulan
           example: 1
-        file:
-          type: string
-          description: File tugas yang dikumpulkan
-          example: file.pdf
-        file_url:
-          type: string
-          description: File URL tugas yang dikumpulkan
-          example: https://example.com/file.pdf
+        isi_pengumpulan:
+          description: Isi pengumpulan dalam format JSON
+          example:
+            - id: 5
+              answer: H2O
+            - id: 6
+              answer: Canberra
+          type: array
+          items:
+            type: string
       required:
         - tugasId
+        - isi_pengumpulan
     CreateNilaiDto:
       type: object
       properties:
@@ -1592,99 +1032,10 @@ components:
           example: 1
         nilai:
           type: number
-          minimum: 1
           description: Nilai yang diberikan
           example: 85
       required:
         - pengumpulanId
-        - nilai
-    CreateNilaiResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil menambah nilai
-        nilai:
-          type: object
-          description: Nilai yang baru dibuat
-          example:
-            id: 1
-            pengumpulanId: 1
-            nilai: 85
-            createdAt: 2024-08-30T14:51:29.997Z
-            updatedAt: 2024-08-30T14:51:29.997Z
-      required:
-        - status
-        - message
-        - nilai
-    FindAllNilaiResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil mengambil semua nilai
-        nilai:
-          description: Daftar nilai dengan relasi tambahan
-          example:
-            - id: 1
-              pengumpulanId: 1
-              nilai: 85
-              createdAt: 2024-08-30T14:51:30.005Z
-              updatedAt: 2024-08-30T14:51:30.005Z
-              pengumpulan:
-                tugasId: 1
-                pengumpul:
-                  id: 1
-                  nama_lengkap: John Doe
-                tugas:
-                  nama_tugas: Tugas 1 - Materi A Pelajaran A Kelas 1A
-                  materiId: 1
-                  materi:
-                    nama_materi: Materi A Pelajaran A Kelas 1A
-          type: array
-          items:
-            type: object
-      required:
-        - status
-        - message
-        - nilai
-    FindOneNilaiResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil menemukan nilai
-        nilai:
-          type: object
-          description: Nilai yang ditemukan
-          example:
-            id: 1
-            pengumpulanId: 1
-            nilai: 85
-            createdAt: 2024-08-30T14:51:30.014Z
-            updatedAt: 2024-08-30T14:51:30.014Z
-            pengumpulan:
-              tugasId: 1
-              pengumpul:
-                id: 1
-                nama_lengkap: John Doe
-              tugas:
-                nama_tugas: Tugas 1 - Materi A Pelajaran A Kelas 1A
-                materiId: 1
-                materi:
-                  nama_materi: Materi A Pelajaran A Kelas 1A
-      required:
-        - status
-        - message
         - nilai
     UpdateNilaiDto:
       type: object
@@ -1695,46 +1046,11 @@ components:
           example: 1
         nilai:
           type: number
-          minimum: 1
           description: Nilai yang diberikan
           example: 85
       required:
         - pengumpulanId
         - nilai
-    UpdateNilaiResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil memperbarui nilai
-        nilai:
-          type: object
-          description: Nilai yang diperbarui
-          example:
-            id: 1
-            pengumpulanId: 1
-            nilai: 85
-            createdAt: 2024-08-30T14:51:30.024Z
-            updatedAt: 2024-08-30T14:51:30.024Z
-      required:
-        - status
-        - message
-        - nilai
-    DeleteNilaiResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-        message:
-          type: string
-          example: Berhasil menghapus nilai
-      required:
-        - status
-        - message
     CreateUserOnMateriDto:
       type: object
       properties:
@@ -1744,6 +1060,32 @@ components:
           example: 1
       required:
         - materiId
+    RegisterDto:
+      type: object
+      properties:
+        nama_lengkap:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        confPassword:
+          type: string
+        roleId:
+          type: number
+        asal_sekolah:
+          type: string
+        isActive:
+          type: boolean
+      required:
+        - nama_lengkap
+        - username
+        - password
+        - confPassword
+        - roleId
+        - isActive
     LoginDto:
       type: object
       properties:
