@@ -19,19 +19,11 @@ export interface Guru {
     username:     string;
     email:        string;
     roleId:       number;
+    asal_sekolah: string;
+    isActive:     boolean;
     role:         Role;
     createdAt:    Date;
     updatedAt:    Date;
-    kelas:        Kela[];
-}
-
-export interface Kela {
-    kelas: Kelas;
-}
-
-export interface Kelas {
-    id:         number;
-    nama_kelas: string;
 }
 
 export interface Role {
@@ -215,17 +207,11 @@ const typeMap: any = {
         { json: "username", js: "username", typ: "" },
         { json: "email", js: "email", typ: "" },
         { json: "roleId", js: "roleId", typ: 0 },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: "" },
+        { json: "isActive", js: "isActive", typ: true },
         { json: "role", js: "role", typ: r("Role") },
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },
-        { json: "kelas", js: "kelas", typ: a(r("Kela")) },
-    ], false),
-    "Kela": o([
-        { json: "kelas", js: "kelas", typ: r("Kelas") },
-    ], false),
-    "Kelas": o([
-        { json: "id", js: "id", typ: 0 },
-        { json: "nama_kelas", js: "nama_kelas", typ: "" },
     ], false),
     "Role": o([
         { json: "id", js: "id", typ: 0 },

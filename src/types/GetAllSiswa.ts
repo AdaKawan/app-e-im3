@@ -18,8 +18,9 @@ export interface Siswa {
     nama_lengkap: string;
     email:        string;
     username:     string;
-    password:     string;
     roleId:       number;
+    asal_sekolah: null;
+    isActive:     boolean;
     createdAt:    Date;
     updatedAt:    Date;
 }
@@ -199,8 +200,9 @@ const typeMap: any = {
         { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
         { json: "email", js: "email", typ: "" },
         { json: "username", js: "username", typ: "" },
-        { json: "password", js: "password", typ: "" },
         { json: "roleId", js: "roleId", typ: 0 },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: null },
+        { json: "isActive", js: "isActive", typ: true },
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },
     ], false),
