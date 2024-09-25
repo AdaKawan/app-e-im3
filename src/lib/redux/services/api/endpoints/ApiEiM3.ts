@@ -3,6 +3,7 @@ import { ApiEiM3Slice as api } from "../ApiEiM3Slice";
 import { GetAllSiswa } from "@/types/GetAllSiswa";
 import { GetAllPelajaran } from "@/types/GetAllPelajaran";
 import { GetMeResponse } from "@/types/GetMeResponse";
+import { RegisterResponse } from "@/types/RegisterResponse";
 export const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     userControllerGetAllGuru: build.query<
@@ -547,7 +548,7 @@ export type UserOnMateriControllerRemoveApiArg = {
   userId: number;
   materiId: number;
 };
-export type AuthControllerRegisterApiResponse = unknown;
+export type AuthControllerRegisterApiResponse = RegisterResponse;
 export type AuthControllerRegisterApiArg = {
   registerDto: RegisterDto;
 };

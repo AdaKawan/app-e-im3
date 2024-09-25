@@ -1,26 +1,39 @@
 // To parse this data:
 //
-//   import { Convert, GlobalResponse } from "./file";
+//   import { Convert, RegisterResponse } from "./file";
 //
-//   const globalResponse = Convert.toGlobalResponse(json);
+//   const registerResponse = Convert.toRegisterResponse(json);
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface GlobalResponse {
+export interface RegisterResponse {
     status: string;
-    message: string[] | string;
+    message: string;
+    user: User;
+}
+
+export interface User {
+    id: number;
+    nama_lengkap: string;
+    email: string;
+    username: string;
+    roleId: number;
+    asal_sekolah: null | string;
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-    public static toGlobalResponse(json: string): GlobalResponse {
-        return cast(JSON.parse(json), r("GlobalResponse"));
+    public static toRegisterResponse(json: string): RegisterResponse {
+        return cast(JSON.parse(json), r("RegisterResponse"));
     }
 
-    public static globalResponseToJson(value: GlobalResponse): string {
-        return JSON.stringify(uncast(value, r("GlobalResponse")), null, 2);
+    public static registerResponseToJson(value: RegisterResponse): string {
+        return JSON.stringify(uncast(value, r("RegisterResponse")), null, 2);
     }
 }
 
@@ -177,8 +190,20 @@ function r(name: string) {
 }
 
 const typeMap: any = {
-    "GlobalResponse": o([
+    "RegisterResponse": o([
         { json: "status", js: "status", typ: "" },
-        { json: "message", js: "message", typ: u(a(""), "") },
+        { json: "message", js: "message", typ: "" },
+        { json: "user", js: "user", typ: r("User") },
+    ], false),
+    "User": o([
+        { json: "id", js: "id", typ: 0 },
+        { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
+        { json: "email", js: "email", typ: "" },
+        { json: "username", js: "username", typ: "" },
+        { json: "roleId", js: "roleId", typ: 0 },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: u(null, "") },
+        { json: "isActive", js: "isActive", typ: true },
+        { json: "createdAt", js: "createdAt", typ: Date },
+        { json: "updatedAt", js: "updatedAt", typ: Date },
     ], false),
 };

@@ -14,6 +14,9 @@ import { setIsLogin } from "@/lib/redux/features/isLogin/isLogin";
 import { setCookie, getCookie } from 'cookies-next';
 import ToastNotification from "@/components/ToastNotification";
 import { useAuthControllerLoginMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
+import Link from "next/link";
+import { GlobalResponse } from "@/types/GlobalResponse";
+import { isGlobalResponse } from "@/lib/utils/isGlobalResponse";
 
 export default function Home() {
   const [login, { isLoading: isLoadingLogin, error, data }] = useAuthControllerLoginMutation();
@@ -152,7 +155,7 @@ export default function Home() {
     event.preventDefault();
     try {
       const response = await login({ loginDto: { username, password, rememberMe } }).unwrap();
-      console.log(response)
+      console.log('Fetch', response)
       const getMe = Convert.toGetMeResponse(JSON.stringify(response))
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 7);
@@ -198,9 +201,14 @@ export default function Home() {
       // }
       dispatch(setIsLogin(true))
     } catch (err) {
-      console.log(err)
-      setErrorMessage(`Error: ${err}`)
-      setToastMessage(`Error: ${err}`);
+      if (isGlobalResponse(err)) {
+        const error: GlobalResponse = err;
+        setErrorMessage(`Error: ${error.status}`);
+        setToastMessage(`Error: ${error.message}`);
+      } else {
+        setErrorMessage('Error');
+        setToastMessage('Error');
+      }
       setToastType('error');
       setShowToast(true);
     }
@@ -209,55 +217,65 @@ export default function Home() {
   return (
     <div className="flex-grow flex justify-center items-center pt-10">
       {isLoading ? 
-       <Spinner size="xl" /> :
-       <Card className="w-full max-w-lg">
-        <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
-          <h1 className="text-center font-bold text-2xl">Selamat Datang</h1>
-          <h2 className="text-center font-bold">Silahkan masukkan username dan password anda</h2>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="username" value="Username" />
+        <Spinner size="xl" /> :
+        <Card className="w-full max-w-lg">
+          <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
+            <h1 className="text-center font-bold text-2xl">Selamat Datang</h1>
+            <h2 className="text-center font-bold">Silahkan masukkan username dan password anda</h2>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="username" value="Username" />
+              </div>
+              <TextInput
+                id="username"
+                type="text"
+                placeholder="usereim3"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
-            <TextInput
-              id="username"
-              type="text"
-              placeholder="usereim3"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="password" value="Password" />
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="password" value="Password" />
+              </div>
+              <TextInput
+                id="password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
-            <TextInput
-              id="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="remember"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              <Label htmlFor="remember">Remember me</Label>
+            </div>
+            <Button type="submit">
+              {isLoadingLogin ? 
+              <>
+                <Spinner/>
+                <span className="pl-3">Tunggu...</span>
+              </>
+              : 'Login'}
+            </Button>
+          </form>
+          
+          {/* Tautan untuk mendaftar sebagai murid dan guru */}
+          <div className="mt-4 text-center">
+            <p className="text-sm">
+              Belum punya akun? 
+              <Link href="/register-siswa" className="text-blue-500 hover:underline ml-1">Daftarkan diri sebagai siswa</Link> atau 
+              <Link href="/register-guru" className="text-blue-500 hover:underline ml-1">daftarkan diri sebagai guru</Link>.
+            </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Checkbox
-              id="remember"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-            />
-            <Label htmlFor="remember">Remember me</Label>
-          </div>
-          <Button type="submit">
-            {isLoadingLogin ? 
-            <>
-              <Spinner/>
-              <span className="pl-3">Tunggu...</span>
-            </>
-            : 'Login'}
-          </Button>
-        </form>
-      </Card>
+        </Card>
       }
+      
       {showToast && (
         <div className="fixed bottom-4 right-4">
           <ToastNotification
