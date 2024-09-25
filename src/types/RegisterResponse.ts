@@ -1,39 +1,39 @@
 // To parse this data:
 //
-//   import { Convert, GetAllSiswa } from "./file";
+//   import { Convert, RegisterResponse } from "./file";
 //
-//   const getAllSiswa = Convert.toGetAllSiswa(json);
+//   const registerResponse = Convert.toRegisterResponse(json);
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface GetAllSiswa {
-    status:  string;
+export interface RegisterResponse {
+    status: string;
     message: string;
-    siswa:   Siswa[];
+    user: User;
 }
 
-export interface Siswa {
-    id:           number;
+export interface User {
+    id: number;
     nama_lengkap: string;
-    email:        string;
-    username:     string;
-    roleId:       number;
-    asal_sekolah: null;
-    isActive:     boolean;
-    createdAt:    Date;
-    updatedAt:    Date;
+    email: string;
+    username: string;
+    roleId: number;
+    asal_sekolah: null | string;
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-    public static toGetAllSiswa(json: string): GetAllSiswa {
-        return cast(JSON.parse(json), r("GetAllSiswa"));
+    public static toRegisterResponse(json: string): RegisterResponse {
+        return cast(JSON.parse(json), r("RegisterResponse"));
     }
 
-    public static getAllSiswaToJson(value: GetAllSiswa): string {
-        return JSON.stringify(uncast(value, r("GetAllSiswa")), null, 2);
+    public static registerResponseToJson(value: RegisterResponse): string {
+        return JSON.stringify(uncast(value, r("RegisterResponse")), null, 2);
     }
 }
 
@@ -89,7 +89,7 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
             const typ = typs[i];
             try {
                 return transform(val, typ, getProps);
-            } catch (_) {}
+            } catch (_) { }
         }
         return invalidValue(typs, val, key, parent);
     }
@@ -148,9 +148,9 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
     if (Array.isArray(typ)) return transformEnum(typ, val);
     if (typeof typ === "object") {
         return typ.hasOwnProperty("unionMembers") ? transformUnion(typ.unionMembers, val)
-            : typ.hasOwnProperty("arrayItems")    ? transformArray(typ.arrayItems, val)
-            : typ.hasOwnProperty("props")         ? transformObject(getProps(typ), typ.additional, val)
-            : invalidValue(typ, val, key, parent);
+            : typ.hasOwnProperty("arrayItems") ? transformArray(typ.arrayItems, val)
+                : typ.hasOwnProperty("props") ? transformObject(getProps(typ), typ.additional, val)
+                    : invalidValue(typ, val, key, parent);
     }
     // Numbers can be parsed by Date but shouldn't be.
     if (typ === Date && typeof val !== "number") return transformDate(val);
@@ -190,18 +190,18 @@ function r(name: string) {
 }
 
 const typeMap: any = {
-    "GetAllSiswa": o([
+    "RegisterResponse": o([
         { json: "status", js: "status", typ: "" },
         { json: "message", js: "message", typ: "" },
-        { json: "siswa", js: "siswa", typ: a(r("Siswa")) },
+        { json: "user", js: "user", typ: r("User") },
     ], false),
-    "Siswa": o([
+    "User": o([
         { json: "id", js: "id", typ: 0 },
         { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
         { json: "email", js: "email", typ: "" },
         { json: "username", js: "username", typ: "" },
         { json: "roleId", js: "roleId", typ: 0 },
-        { json: "asal_sekolah", js: "asal_sekolah", typ: null },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: u(null, "") },
         { json: "isActive", js: "isActive", typ: true },
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },

@@ -8,8 +8,8 @@
 // match the expected interface, even if the JSON is valid.
 
 export interface GlobalResponse {
-    status:  string;
-    message: string;
+    status: string;
+    message: string[] | string;
 }
 
 // Converts JSON strings to/from your types
@@ -76,7 +76,7 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
             const typ = typs[i];
             try {
                 return transform(val, typ, getProps);
-            } catch (_) {}
+            } catch (_) { }
         }
         return invalidValue(typs, val, key, parent);
     }
@@ -135,9 +135,9 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
     if (Array.isArray(typ)) return transformEnum(typ, val);
     if (typeof typ === "object") {
         return typ.hasOwnProperty("unionMembers") ? transformUnion(typ.unionMembers, val)
-            : typ.hasOwnProperty("arrayItems")    ? transformArray(typ.arrayItems, val)
-            : typ.hasOwnProperty("props")         ? transformObject(getProps(typ), typ.additional, val)
-            : invalidValue(typ, val, key, parent);
+            : typ.hasOwnProperty("arrayItems") ? transformArray(typ.arrayItems, val)
+                : typ.hasOwnProperty("props") ? transformObject(getProps(typ), typ.additional, val)
+                    : invalidValue(typ, val, key, parent);
     }
     // Numbers can be parsed by Date but shouldn't be.
     if (typ === Date && typeof val !== "number") return transformDate(val);
@@ -179,6 +179,6 @@ function r(name: string) {
 const typeMap: any = {
     "GlobalResponse": o([
         { json: "status", js: "status", typ: "" },
-        { json: "message", js: "message", typ: "" },
+        { json: "message", js: "message", typ: u(a(""), "") },
     ], false),
 };

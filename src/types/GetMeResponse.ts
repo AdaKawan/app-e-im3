@@ -10,13 +10,14 @@
 export interface GetMeResponse {
     status:  string;
     message: string;
-    data:    Data;
+    user:    User;
 }
 
-export interface Data {
+export interface User {
     id:            number;
     nama_lengkap:  string;
     role:          string;
+    asal_sekolah:  null | string;
     refresh_token: string;
 }
 
@@ -188,12 +189,13 @@ const typeMap: any = {
     "GetMeResponse": o([
         { json: "status", js: "status", typ: "" },
         { json: "message", js: "message", typ: "" },
-        { json: "data", js: "data", typ: r("Data") },
+        { json: "user", js: "user", typ: r("User") },
     ], false),
-    "Data": o([
+    "User": o([
         { json: "id", js: "id", typ: 0 },
         { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
         { json: "role", js: "role", typ: "" },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: u(null, "") },
         { json: "refresh_token", js: "refresh_token", typ: "" },
     ], false),
 };
