@@ -2,7 +2,7 @@
 
 import { Spinner, Table } from "flowbite-react"
 import Link from "next/link";
-import { useUserControllerGetAllGuruQuery } from "@/lib/redux/services/api/ApiEiM3Slice";
+import { useUserControllerGetAllGuruQuery } from "@/lib/redux/services/api/endpoints/ApiEiM3";
 import { useEffect } from "react";
 
 export default function ListGuruAdminPage () {

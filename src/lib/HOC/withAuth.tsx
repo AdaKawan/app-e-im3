@@ -3,7 +3,7 @@
 import React, { useEffect, ComponentType } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { useAuthControllerGetMeQuery } from '../redux/services/api/ApiEiM3Slice';
+import { useAuthControllerGetMeQuery } from '@/lib/redux/services/api/endpoints/ApiEiM3';
 import axios from 'axios';
 
 interface WithAuthProps {}

@@ -190,15 +190,15 @@ export default function Home() {
       setToastMessage('Login successful');
       setToastType('success');
       setShowToast(true);
-      // if(getMe.user.role === 'admin') {
-      //   router.push("/admin")
-      // } else if (getMe.user.role === 'guru') {
-      //   router.push("/guru")
-      // } else if (getMe.user.role === 'siswa') {
-      //   router.push("/siswa")
-      // } else {
-      //   setErrorMessage("Role tidak dikenali")
-      // }
+      if(getMe.user.role === 'admin') {
+        router.push("/admin")
+      } else if (getMe.user.role === 'guru') {
+        router.push("/guru")
+      } else if (getMe.user.role === 'siswa') {
+        router.push("/siswa")
+      } else {
+        setErrorMessage("Role tidak dikenali")
+      }
       dispatch(setIsLogin(true))
     } catch (err) {
       if (isGlobalResponse(err)) {
@@ -255,7 +255,7 @@ export default function Home() {
               />
               <Label htmlFor="remember">Remember me</Label>
             </div>
-            <Button type="submit">
+            <Button type="submit" disabled={isLoadingLogin}>
               {isLoadingLogin ? 
               <>
                 <Spinner/>

@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMateriControllerCreateMutation } from "@/lib/redux/services/api/ApiEiM3Slice";
+import { useMateriControllerCreateMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
 import TiptapEditor from "@/components/TiptapEditor";
 import { TextInput } from "flowbite-react";
 
@@ -31,9 +31,9 @@ const CreateMateri = () => {
       formData.append("isi_materi", editorContent);
 
       // Mengirim data materi ke server
-      await createMateri({
-        createMateriDto: formData
-      });
+      // await createMateri({
+      //   createMateriDto: formData
+      // });
       reset();
     //   router.push('/admin/materi'); // Arahkan pengguna ke halaman materi setelah submit
     } catch (error) {

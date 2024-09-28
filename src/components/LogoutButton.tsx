@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button, Spinner } from 'flowbite-react';
-import { useAuthControllerLogoutMutation } from '@/lib/redux/services/api/ApiEiM3Slice';
+import { useAuthControllerLogoutMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
 import { setIsLogin } from '@/lib/redux/features/isLogin/isLogin';
 import { useAppDispatch } from '@/lib/redux/store';
 import { deleteCookie, setCookie } from 'cookies-next';

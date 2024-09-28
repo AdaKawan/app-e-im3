@@ -1,6 +1,6 @@
 import { InfoCard } from './InfoCard';
 
-const DashboardLayout = ({ data } : { data : {
+const DashboardLayoutAdmin = ({ data } : { data : {
     jumlahGuru: number;
     jumlahSiswa: number;
     jumlahPelajaran: number; 
@@ -16,4 +16,4 @@ const DashboardLayout = ({ data } : { data : {
   );
 };
 
-export default DashboardLayout;
+export default DashboardLayoutAdmin;

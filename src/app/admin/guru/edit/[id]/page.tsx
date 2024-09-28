@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Label, TextInput, Select, Button, Checkbox } from 'flowbite-react';
 import ToastNotification from '@/components/ToastNotification';
-import { useUserControllerFinOneGuruQuery, useUserControllerUpdateMutation } from '@/lib/redux/services/api/ApiEiM3Slice'; // Pastikan Anda telah mengimpor hook yang benar
+import { useUserControllerFinOneGuruQuery, useUserControllerUpdateMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
 import { useRouter } from 'next/navigation';
 
 export default function EditGuruForm({ params }: { params: { id: string } }) {
@@ -24,48 +24,48 @@ export default function EditGuruForm({ params }: { params: { id: string } }) {
   });
   const router = useRouter()
 
-  useEffect(() => {
-    if (data) {
-      setNamaLengkap(data.guru.nama_lengkap);
-      setEmail(data.guru.email);
-      setUsername(data.guru.username);
-      setRoleId(data.guru.role.id);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setNamaLengkap(data.guru.nama_lengkap);
+  //     setEmail(data.guru.email);
+  //     setUsername(data.guru.username);
+  //     setRoleId(data.guru.role.id);
+  //   }
+  // }, [data]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await updateUser({
-        id: Number(params.id),
-        updateUserDto: {
-          nama_lengkap: namaLengkap,
-          email,
-          username,
-          password,
-          confPassword,
-        },
-      }).unwrap();
-      setToastMessage('User updated successfully');
-      setToastType('success');
-      setShowToast(true);
-      router.push('/admin/guru')
-    } catch (error) {
-      let errorMessage = 'Gagal mengupdate user';
-      if (error && typeof error === 'object' && 'data' in error) {
-        const errorData = error as { data: { message: string } };
-        errorMessage = `Error: ${errorData.data.message}`;
-      }
-      setToastMessage(`${errorMessage}`);
-      setToastType('error');
-      setShowToast(true);
-      console.error('Failed to update user:', error);
-    }
-  };
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   try {
+  //     await updateUser({
+  //       id: Number(params.id),
+  //       updateUserDto: {
+  //         nama_lengkap: namaLengkap,
+  //         email,
+  //         username,
+  //         password,
+  //         confPassword,
+  //       },
+  //     }).unwrap();
+  //     setToastMessage('User updated successfully');
+  //     setToastType('success');
+  //     setShowToast(true);
+  //     router.push('/admin/guru')
+  //   } catch (error) {
+  //     let errorMessage = 'Gagal mengupdate user';
+  //     if (error && typeof error === 'object' && 'data' in error) {
+  //       const errorData = error as { data: { message: string } };
+  //       errorMessage = `Error: ${errorData.data.message}`;
+  //     }
+  //     setToastMessage(`${errorMessage}`);
+  //     setToastType('error');
+  //     setShowToast(true);
+  //     console.error('Failed to update user:', error);
+  //   }
+  // };
 
   return (
     <div className="flex-grow flex justify-center items-center pt-10">
-      <Card className="w-full max-w-lg">
+      {/* <Card className="w-full max-w-lg">
         <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
           <h1 className="text-center font-bold text-2xl">Edit Guru</h1>
           {isFetching ? (
@@ -172,7 +172,7 @@ export default function EditGuruForm({ params }: { params: { id: string } }) {
             onClose={() => setShowToast(false)}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 };
